@@ -1,0 +1,73 @@
+﻿@using DatabaseManager
+
+<div id="employee-update" class="container">
+    <h3 class="text-center">Update an @ViewBag.DatabaseType</h3>
+    <form class="form update column-flex" method="post">
+        <div class="flex-cntr">
+            <div class="column-flex">
+                <label>Current First Name:</label>
+                <p>@DatabaseManagement.SelectedEmployee.FirstName</p>
+            </div>
+            <div class="column-flex">
+                <label for="fNameUpdate">New First Name:</label>
+                <input id="fNameUpdate" name="FirstName">
+            </div>
+        </div>
+
+        <div class="flex-cntr">
+            <div class="column-flex">
+                <label>Current Last Name:</label>
+                <p>@DatabaseManagement.SelectedEmployee.LastName</p>
+            </div>
+            <div class="column-flex">
+                <label for="lNameUpdate">New First Name:</label>
+                <input id="lNameUpdate" name="LastName">
+            </div>
+        </div>
+            
+        <div class="flex-cntr">
+            <div class="column-flex">
+                <label>Current Email Address:</label>
+                <p>@DatabaseManagement.SelectedEmployee.Email</p>
+            </div>
+            <div class="column-flex">
+                <label for="emailUpdate">New Email Address:</label>
+                <input id="emailUpdate" name="Email">
+            </div>
+                    
+        </div>
+
+       <div class="flex-cntr">
+            <div class="column-flex">
+                <label>Current Place of Work:</label>
+                @{ using(Context context = new Context())
+                    {
+                        if(DatabaseManagement.SelectedEmployee.PlaceOfWork != null)
+                        {
+                            <p>@DatabaseManagement.SelectedEmployee.PlaceOfWork.Name</p>
+                        }
+                    }
+                }
+            </div>
+            <div class="column-flex">
+                <label for="PoWUpdate">New Place of Work:</label>
+                <input id="PoWUpdate" name="PlaceOfWork">
+            </div>            
+        </div>
+                
+        <div class="flex-cntr">
+            <div class="column-flex">
+                <label>Current Phone Number:</label>
+                <p>@DatabaseManagement.SelectedEmployee.PhoneNumber</p>
+            </div>
+            <div class="column-flex file-input">
+                <label for="numUpdate">New Phone Number</label>
+                <input id="numUpdate" name="PhoneNumber">
+            </div>
+        </div>
+        <button type="submit" id="employeeUpdateBtn" class="btn">Update</button>
+    </form>
+</div>
+
+    
+

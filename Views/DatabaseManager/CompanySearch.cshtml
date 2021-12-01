@@ -1,0 +1,20 @@
+﻿
+<div id="company-search" class="container">
+    <h3 class="text-center">Search @ViewBag.DatabaseType Database</h3>
+
+    <form class="column-flex form" method="post">
+        <label for="nameSearch">@ViewBag.DatabaseType Name:</label>
+        <input id="nameSearch" name="Name">
+
+        <label for="emailSearch">@ViewBag.DatabaseType Email Address:</label>
+        <input  id="emailSearch" name="Email">
+
+        <label for="logoSearch">@ViewBag.DatabaseType Logo:</label>
+        <input id="logoSearch" name="logoSearch" type="file">
+
+        <label for="siteSearch">@ViewBag.DatabaseType Website:</label>
+        <input name="Website" id="siteSearch">
+        
+        <button type="submit" id="companySearchBtn" class="btn">Search</button>
+    </form>
+</div>

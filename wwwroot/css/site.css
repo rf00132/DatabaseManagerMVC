@@ -1,0 +1,245 @@
+/*
+main colour: lightcyan
+
+accent colour:
+
+secondary accent colour: indigo
+
+first bp: 450px
+second bp: 768px
+third bp:
+fourth bp:
+*/
+
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+	
+	background-color: lightcyan;
+	color:indigo;
+	font-family: sans-serif;
+}
+.delete-warning-message{
+	display: none;
+}
+
+/* general styles */
+.page-top {
+	margin-top: 60px;
+}
+
+.page-bottom {
+	margin-bottom: 60px;
+}
+/* text styles */
+.page-title {
+	width: 100%;
+}
+
+.text-center{
+	text-align: center;
+}
+
+/* flex styles */
+.column-flex{
+    display: flex;
+    flex-direction: column;
+}
+
+.row-flex{
+    display: flex;
+}
+
+.flex-center{
+    justify-content:center;
+}
+
+.flex-between{
+    justify-content: space-between;
+}
+
+.flex-around{
+    justify-content: space-around;
+}
+
+/* form styles */
+.form input{
+    margin-bottom: 15px;
+}
+
+.form .row-flex .column-flex {
+    margin: 0;
+}
+
+.form input{
+	background: lightcyan;
+	border-radius: 10px;
+	border-color: indigo;
+	padding: 3px 10px;
+	color: indigo;
+	margin-top: 5px;
+}
+
+
+
+/* button styles */
+
+.btn{
+	margin: 5px;
+	width: 120px;
+	padding: 3px 5px;
+	border: 2px solid indigo;
+}
+
+.main-nav-btns{
+	margin-top: 15px;
+	display: flex;
+	flex-direction: column;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.main-nav-btns a{
+	margin-left: auto;
+	margin-right: auto;
+}
+
+
+/* update styles  */
+
+.update{
+	display: flex;
+	flex-direction: column;
+}
+
+.update .column-flex{
+	width: calc(100vw - 70px);
+}
+
+/* search results styles */
+
+
+.search-result{
+	border: 2px solid indigo;
+	padding: 5px 10px;
+	border-radius: 5px;
+	margin: 5px 0;
+}
+
+.search-result-btn-cntr{
+	margin-top: 5px;
+}
+
+
+/* delete warning message styles*/
+
+.delete-warning-message{
+	text-align: center;
+}
+
+.search-result .btn{
+	width: 55px;
+	font-size: 12px;
+}
+
+/* container styles */
+
+.container{
+	padding: 5px 10px;
+	margin: 0 auto;
+}
+
+.logo-cntr{
+	margin-bottom: 15px;
+	
+}
+
+.update .logo-cntr .column-flex{
+	width: 200px 
+}
+
+.logo-cntr img{
+	width:100px;
+}
+
+#logoInputAdd,
+#logoInputSearch,
+#logoInputUpdate{
+	font-size: 12px;
+}
+
+
+
+@media screen and (min-width: 470px) {
+	.logo-cntr{
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.container {
+		width: 420px;
+	}
+	
+	.update .column-flex{
+		width: 390px;
+	}
+
+	.main-nav-btns{
+		flex-direction: row;
+	}
+
+	.main-nav-btns a{
+		margin-left: 5px;
+		margin-right: 5px;
+	}
+}
+
+@media screen and (min-width: 800px) {
+	.container{
+		width: 780px
+	}
+
+	html label, html p, html input{
+		font-size: 16px;
+			
+	}
+
+	.update .column-flex{
+		width: 335px;
+	}
+
+	.update .flex-cntr:nth-child(2n-1){
+		
+		margin: 0 10px 0 0;
+	}
+
+	.update .flex-cntr:nth-child(2n){
+		
+		margin: 0 0 0 10px;
+	}
+
+	.update{
+		flex-direction: row;
+		flex-wrap: wrap;
+		
+	}
+
+	.update .btn {
+		margin-top: 85px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.update .logo-cntr .column-flex{
+		width: calc(768px / 4 - 15px);
+	
+	}
+}
+
+@media screen and (min-width: 991px){
+
+}

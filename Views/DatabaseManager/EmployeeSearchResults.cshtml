@@ -1,0 +1,44 @@
+﻿
+<div id="employee-search-results" class="container">
+        
+    <h3 >Search Results:</h3>
+    <div class="search-results-cntr column-flex">
+        
+        @if( DatabaseManagement.EmployeeSearchResults[5].Count() == 0) { 
+            <div class="text-center">No entries matched your search terms.</div>
+        } 
+        else
+        {
+           
+           
+            @for (int i = 0; i < DatabaseManagement.EmployeeSearchResults[5].Count(); i++)
+            {
+                <div class="search-result row-flex flex-between">
+                    <p>@DatabaseManagement.EmployeeSearchResults[5][i].DisplayText()</p>
+                    <div class="search-result-btn-cntr">
+                        @using(Html.BeginForm("UpdateEmployee", "DatabaseManager"))
+                        {
+                            <button class="btn" name="updateEmployee" type="submit" value="@i">Update</button>
+                        }
+                        
+                        @using(Html.BeginForm("DeleteEmployee", "DatabaseManager"))
+                        {
+                            <button class="btn" name="deleteEmployee" type="submit" value="@i">Delete</button>
+                        }
+                    </div>
+                </div>
+            }
+        }
+        
+    </div>
+
+    <div class="delete-warning-message">
+        <p>Are you sure you want to delete "###" from the "###" Database?</p>
+        <div class="row-flex flex-center">
+            <button class="btn">Yes</button>
+            <button class="btn">No</button>
+        </div>
+    </div>
+
+</div>
+

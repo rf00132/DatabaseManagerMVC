@@ -1,0 +1,43 @@
+﻿
+
+<div id="company-search-results" class="container">
+        
+    <h3>Search Results:</h3>
+    <div class="search-results-cntr column-flex">
+
+       @if( DatabaseManagement.CompanySearchResults[3].Count() == 0) { 
+            <div class="text-center">No entries matched your search terms.</div>
+        } 
+        else
+        {
+            
+           
+            @for (int i = 0; i < DatabaseManagement.CompanySearchResults[3].Count(); i++)
+            {
+                <div class="search-result row-flex flex-between">
+                    <p>@DatabaseManagement.CompanySearchResults[3][i].DisplayText()</p>
+                    <div class="search-result-btn-cntr">
+                        @using(Html.BeginForm("UpdateCompany", "DatabaseManager"))
+                        {
+                            <button class="btn" name="updateCompany" type="submit" value="@i">Update</button>
+                        }
+
+                        @using(Html.BeginForm("DeleteCompany", "DatabaseManager"))
+                        {
+                            <button class="btn" name="deleteCompany" type="submit" value="@i">Delete</button>
+                        }
+                    </div>
+                </div>
+            }
+        }
+    </div>
+
+    <div class="delete-warning-message">
+        <p>Are you sure you want to delete "###" from the "###" Database?</p>
+        <div class="row-flex flex-center">
+            <button class="btn">Yes</button>
+            <button class="btn">No</button>
+        </div>
+    </div>
+
+</div>
