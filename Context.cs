@@ -12,6 +12,8 @@ namespace DatabaseManager
     {
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Company> Companies { get; set; }
+
         //public DbSet<CompanyLogo> CompanyLogos { get; set; }
+
     }
 }

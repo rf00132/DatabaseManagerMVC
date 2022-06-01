@@ -3,21 +3,42 @@
     <h3 class="text-center">Add an @ViewBag.DatabaseType to the Database</h3>
     <form class="column-flex form" method="post">
             
-        <label for="fNameAdd">First Name:</label>
-        <input id="fNameAdd" name="FirstName" required>
+        <label for="fNameInput">First Name:</label>
+        <input id="fNameInput" name="FirstName" required>
 
-        <label for="lNameAdd">Last Name:</label>
-        <input id="lNameAdd" name="LastName" required>
+        <label for="lNameInput">Last Name:</label>
+        <input id="lNameInput" name="LastName" required>
 
-        <label for="emailAdd">Email Address:</label>
-        <input  id="emailAdd"  name="Email">
+        <label for="emailInput">Email Address:</label>
+        <input  id="emailInput"  name="Email">
 
-        <label  for="poWAdd">Place of Work:</label>
-        <input  id="poWAdd"  name="PlaceOfWork">
+        <label  for="poWInput">Place of Work:</label>
+        
+        @using(Context context = new Context())
+        {
+            if(context.Companies.Count() == 0)
+            {
+                 <p>No companies are currently stored in the database.</p>
+            }
+            else
+            {
+                <select id="poWInput"  name="PlaceOfWork">
+                    <option value="none">N/A</option>
+                    @foreach(Company company in context.Companies)
+                    {
+                    <option value="@company.Id">@company.Name</option>
+                    }
+                </select>
+            }
+        }
 
-        <label for="numAdd">Phone Number:</label>
-        <input id="numAdd" name="PhoneNumber">
+        <label for="numInput">Phone Number:</label>
+        <input id="numInput" name="PhoneNumber">
 
-        <button type="submit" id="employeeAddBtn" class="btn">Add</button>
+        <button type="submit" id="employeeSubmitBtn" class="btn">Add</button>
+
+        <p id="employeeErrorMessage"></p>
     </form>
 </div>
+
+<script src="~/js/employeeValidation.js" asp-append-version="true"></script>

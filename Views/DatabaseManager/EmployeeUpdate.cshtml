@@ -1,73 +1,70 @@
 ﻿@using DatabaseManager
 
 <div id="employee-update" class="container">
-    <h3 class="text-center">Update an @ViewBag.DatabaseType</h3>
+    <h3 class="text-center">Update Employees</h3>
     <form class="form update column-flex" method="post">
         <div class="flex-cntr">
             <div class="column-flex">
-                <label>Current First Name:</label>
-                <p>@DatabaseManagement.SelectedEmployee.FirstName</p>
-            </div>
-            <div class="column-flex">
-                <label for="fNameUpdate">New First Name:</label>
-                <input id="fNameUpdate" name="FirstName">
+                <label for="fNameInput">New First Name:</label>
+                <input id="fNameInput" name="FirstName" value="@DatabaseManagement.SelectedEmployee.FirstName">
             </div>
         </div>
 
         <div class="flex-cntr">
             <div class="column-flex">
-                <label>Current Last Name:</label>
-                <p>@DatabaseManagement.SelectedEmployee.LastName</p>
-            </div>
-            <div class="column-flex">
-                <label for="lNameUpdate">New First Name:</label>
-                <input id="lNameUpdate" name="LastName">
+                <label for="lNameInput">New First Name:</label>
+                <input id="lNameInput" name="LastName" value="@DatabaseManagement.SelectedEmployee.LastName">
             </div>
         </div>
             
         <div class="flex-cntr">
             <div class="column-flex">
-                <label>Current Email Address:</label>
-                <p>@DatabaseManagement.SelectedEmployee.Email</p>
-            </div>
-            <div class="column-flex">
-                <label for="emailUpdate">New Email Address:</label>
-                <input id="emailUpdate" name="Email">
+                <label for="emailInput">New Email Address:</label>
+                <input id="emailInput" name="Email" value="@DatabaseManagement.SelectedEmployee.Email">
             </div>
                     
         </div>
 
        <div class="flex-cntr">
             <div class="column-flex">
-                <label>Current Place of Work:</label>
-                @{ using(Context context = new Context())
+                <label for="poWInput">New Place of Work:</label>
+                @using(Context context = new Context())
+                {
+                    if(context.Companies.Count() == 0)
                     {
-                        if(DatabaseManagement.SelectedEmployee.PlaceOfWork != null)
-                        {
-                            <p>@DatabaseManagement.SelectedEmployee.PlaceOfWork.Name</p>
-                        }
+                        <p>No companies are currently stored in the database.</p>
+                    }
+                    else
+                    {
+                        <select id="poWInput"  name="PlaceOfWork">
+                            @if (DatabaseManagement.SelectedEmployee.PlaceOfWork != null)
+                            {
+                                <option value="@DatabaseManagement.SelectedEmployee.PlaceOfWork.Id">@DatabaseManagement.SelectedEmployee.PlaceOfWork.Name</option>
+                            }
+                            <option value="none">N/A</option>
+                            @foreach(Company company in context.Companies)
+                            {
+                                @if(DatabaseManagement.SelectedEmployee.PlaceOfWork != null && company.Id != DatabaseManagement.SelectedEmployee.PlaceOfWork.Id)
+                                {
+                                    <option value="@company.Id">@company.Name</option>
+                                }
+                            }
+                        </select>
                     }
                 }
-            </div>
-            <div class="column-flex">
-                <label for="PoWUpdate">New Place of Work:</label>
-                <input id="PoWUpdate" name="PlaceOfWork">
             </div>            
         </div>
                 
         <div class="flex-cntr">
             <div class="column-flex">
-                <label>Current Phone Number:</label>
-                <p>@DatabaseManagement.SelectedEmployee.PhoneNumber</p>
-            </div>
-            <div class="column-flex file-input">
-                <label for="numUpdate">New Phone Number</label>
-                <input id="numUpdate" name="PhoneNumber">
+                <label for="numInput">New Phone Number</label>
+                <input id="numInput" name="PhoneNumber" value="@DatabaseManagement.SelectedEmployee.PhoneNumber">
             </div>
         </div>
-        <button type="submit" id="employeeUpdateBtn" class="btn">Update</button>
+        <button type="submit" id="employeeUpdateBtn" class="btn">Update <i class="fas fa-check"></i></button>
+
+        <p id="employeeErrorMessage"></p>
     </form>
 </div>
 
-    
-
+<script src="~/js/employeeValidation.js" asp-append-version="true"></script>

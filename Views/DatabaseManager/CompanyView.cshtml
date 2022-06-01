@@ -1,0 +1,47 @@
+﻿
+<div id="company-update" class="container">
+    <h3 class="text-center">Viewing Company</h3>
+
+    <div class="view row-flex" method="post">
+        <div class="flex-cntr row-flex">
+            <div class="column-flex">
+                <label>Company Name:</label>
+                <p>@DatabaseManagement.SelectedCompany.Name</p>
+            </div>
+            <div class="column-flex">
+                <label>Company Email Address:</label>
+                @if(@DatabaseManagement.SelectedCompany.Email != "")
+                {
+                    <p>@DatabaseManagement.SelectedCompany.Email</p>
+                } 
+                else
+                {
+                    <p>None on record.</p>
+                }
+            </div>
+        </div>
+
+        <div class="flex-cntr">
+            <div class="column-flex">
+                <label>Company Website:</label>
+                @if(@DatabaseManagement.SelectedCompany.Website != "")
+                {
+                    <p>@DatabaseManagement.SelectedCompany.Website</p>
+                } 
+                else
+                {
+                    <p>None on record.</p>
+                }
+            </div>
+        </div>
+        <div class="viewBtns row-flex">
+            <a class="btn" name="updateCompany" href="/DatabaseManager/CompanyUpdate"><i class="fas fa-pen"></i></a>
+
+            @using(Html.BeginForm("DeleteCompany", "DatabaseManager"))
+            {
+                <button class="btn" name="deleteCompany" type="submit" value="@DatabaseManagement.SelectedCompany.Id"><i class="fas fa-trash"></i></button>
+            }
+        </div>
+        
+    </div>
+</div>

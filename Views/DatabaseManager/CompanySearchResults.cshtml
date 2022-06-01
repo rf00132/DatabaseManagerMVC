@@ -11,20 +11,32 @@
         else
         {
             
-           
-            @for (int i = 0; i < DatabaseManagement.CompanySearchResults[3].Count(); i++)
+            @foreach (Company company in DatabaseManagement.CompanySearchResults[3])
             {
                 <div class="search-result row-flex flex-between">
-                    <p>@DatabaseManagement.CompanySearchResults[3][i].DisplayText()</p>
-                    <div class="search-result-btn-cntr">
-                        @using(Html.BeginForm("UpdateCompany", "DatabaseManager"))
+                    <div class="result-detail">
+                        <p class="detail-element">@company.DisplayName()</p>
+                       
+                        @if(company.Website != null && company.Website != "")
                         {
-                            <button class="btn" name="updateCompany" type="submit" value="@i">Update</button>
+                            <p class="detail-element">@company.DisplayWebsite()</p>    
+                        }
+
+                        @if(company.Email != null && company.Email != "")
+                        {
+                            <p class="detail-element">@company.DisplayEmail()</p>
+                        }
+                    </div>
+                    
+                    <div class="search-result-btn-cntr">
+                        @using(Html.BeginForm("ViewCompany", "DatabaseManager"))
+                        {
+                            <button class="btn" name="updateCompany" type="submit" value="@company.Id"><i class="fas fa-folder-open"></button>
                         }
 
                         @using(Html.BeginForm("DeleteCompany", "DatabaseManager"))
                         {
-                            <button class="btn" name="deleteCompany" type="submit" value="@i">Delete</button>
+                            <button class="btn" name="deleteCompany" type="submit" value="@company.Id"><i class="fas fa-trash"></button>
                         }
                     </div>
                 </div>

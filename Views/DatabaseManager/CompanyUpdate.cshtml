@@ -1,39 +1,27 @@
 ﻿
 <div id="company-update" class="container">
-    <h3 class="text-center">Update a @ViewBag.DatabaseType</h3>
+    <h3 class="text-center">Update Company</h3>
 
     <form class="form update row-flex" method="post">
         <div class="flex-cntr">
             <div class="column-flex">
-                <label>Current @ViewBag.DatabaseType Name:</label>
-                <p>@DatabaseManagement.SelectedCompany.Name</p>
-            </div>
-            <div class="column-flex">
-                <label for="nameUpdate">New @ViewBag.DatabaseType Name:</label>
-                <input id="nameUpdate" name="Name">
+                <label for="companyNameAdd">New @ViewBag.DatabaseType Name:</label>
+                <input id="companyNameAdd" name="Name" value="@DatabaseManagement.SelectedCompany.Name">
             </div>
         </div>
             
         <div class="flex-cntr">
             <div class="column-flex">
-                <label>Current @ViewBag.DatabaseType Email Address:</label>
-                <p>@DatabaseManagement.SelectedCompany.Email</p>
-            </div>
-            <div class="column-flex">
-                <label for="emailUpdate">New @ViewBag.DatabaseType Email Address:</label>
-                <input id="emailUpdate" name="Email">
+                <label for="companyEmailInput">New @ViewBag.DatabaseType Email Address:</label>
+                <input id="companyEmailInput" name="Email" value="@DatabaseManagement.SelectedCompany.Email">
             </div>
                     
         </div>
 
         <div class="flex-cntr">
             <div class="column-flex">
-                <label>Current @ViewBag.DatabaseType Website:</label>
-                <p>@DatabaseManagement.SelectedCompany.Website</p>
-            </div>
-            <div class="column-flex">
-                <label for="siteUpdate">New @ViewBag.DatabaseType Website:</label>
-                <input id="siteUpdate" name="Website">
+                <label for="companyWebsiteInput">New @ViewBag.DatabaseType Website:</label>
+                <input id="companyWebsiteInput" name="Website" value="@DatabaseManagement.SelectedCompany.Website">
             </div>
         </div>
                 
@@ -50,9 +38,10 @@
             </div>
         </div>*@
             
-        
-        <button type="submit" id="companyUpdateBtn" class="btn">Update</button>
+        <button type="submit" id="companySubmitBtn" class="btn">Update <i class="fas fa-check"></i></button>
          
+        <p id="companyErrorMessage"></p>
     </form>
-    
 </div>
+
+<script src="~/js/companyValidation.js" asp-append-version="true"></script>

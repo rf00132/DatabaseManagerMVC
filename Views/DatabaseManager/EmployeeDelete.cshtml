@@ -1,0 +1,53 @@
+﻿@using DatabaseManager
+
+<div id="employee-update" class="container">
+    <h3 class="text-center">Update an @ViewBag.DatabaseType</h3>
+    <div class="update column-flex" method="post">
+        <div class="flex-cntr">
+            <div class="column-flex">
+                <label>First Name:</label>
+                <p>@DatabaseManagement.SelectedEmployee.FirstName</p>>
+            </div>
+        </div>
+
+        <div class="flex-cntr">
+            <div class="column-flex">
+                <label>Last Name:</label>
+                <p>@DatabaseManagement.SelectedEmployee.LastName</p>
+            </div>
+        </div>
+            
+        <div class="flex-cntr">
+            <div class="column-flex">
+                <label for="emailInput">Email Address:</label>
+                <p>@DatabaseManagement.SelectedEmployee.Email</p>
+            </div>         
+        </div>
+
+       <div class="flex-cntr">
+            <div class="column-flex">
+                <label>Place of Work:</label>
+                @if (DatabaseManagement.SelectedEmployee.PlaceOfWork != null)
+                {
+                    <p>@DatabaseManagement.SelectedEmployee.PlaceOfWork.Name</p>
+                }
+                else
+                {
+                    <p>Unkown</p>
+                }
+            </div>            
+        </div>
+                
+        <div class="flex-cntr">
+            <div class="column-flex file-input">
+                <label>Phone Number:</label>
+                <p>@DatabaseManagement.SelectedEmployee.PhoneNumber</p> 
+            </div>
+        </div>
+
+        @using(Html.BeginForm("ConfirmDeleteEmployee", "DatabaseManager"))
+        {
+            <button class="btn" name="deleteEmployee" type="submit" value="@DatabaseManagement.SelectedEmployee.Id">Confirm Delete <i class="fas fa-trash"></i></button>
+        }
+    </div>
+</div>

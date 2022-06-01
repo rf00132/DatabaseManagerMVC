@@ -16,14 +16,19 @@ namespace DatabaseManager.Models
         public string Email { get; set; }
         //public bool HasLogo { get; set; }
     
-        public string DisplayText()
+        public string DisplayName()
         {
-            string retstring = "Name: " + Name;
-            if(Website != "") retstring += ", Website: " + Website;
-            if(Email != "") retstring += ", Email: " + Email;
-
-            return retstring;
+            return "Name: " + Name;
         }
-    
+
+        public string DisplayWebsite()
+        {
+            return "Website: " + Website;
+        }
+
+        public string DisplayEmail()
+        {
+            return "Email: " + Email;
+        }
     }
 }

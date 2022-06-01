@@ -3,18 +3,24 @@
     <h3 class="text-center">Add a @ViewBag.DatabaseType to the Database</h3>
 
     <form class="column-flex form" method="post">
-        <label for="nameAdd">@ViewBag.DatabaseType Name:</label>
-        <input id="nameAdd" name="name" required>
+        <label for="companyNameAdd">@ViewBag.DatabaseType Name:</label>
+        <input id="companyNameAdd" name="name" required>
 
-        <label for="emailAdd">@ViewBag.DatabaseType Email Address:</label>
-        <input  id="emailAdd" name="email">
+        <label for="companyEmailInput">@ViewBag.DatabaseType Email Address:</label>
+        <input  id="companyEmailInput" name="email">
 
-        <label for="websiteAdd">@ViewBag.DatabaseType Website:</label>
-        <input name="website" id="websiteAdd">
+        <label for="companyWebsiteInput">@ViewBag.DatabaseType Website:</label>
+        <input id="companyWebsiteInput" name="website">
 
+        @*
         <label for="logoAdd">@ViewBag.DatabaseType Logo:</label>
         <input id="logoAdd" name="logo" type="file">
+        *@
 
-        <button type="submit" id="companyAddBtn" class="btn">Add</button>
+        <button type="submit" id="companySubmitBtn" class="btn">Add <i class="fas fa-check"></i></button>
+    
+        <p id="companyErrorMessage"></p>
     </form>
 </div>
+
+<script src="~/js/companyValidation.js" asp-append-version="true"></script>

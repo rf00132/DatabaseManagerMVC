@@ -24,14 +24,12 @@ namespace CSharpReflection3.Controllers
         public IActionResult Company()
         {
             ViewBag.Title = "Company Management";
-            ViewBag.DatabaseType = "Company";
             return View();
         }
 
         public IActionResult CompanyAdd()
         {
             ViewBag.Title = "Add Company";
-            ViewBag.DatabaseType = "Company";
             return View();
         }
 
@@ -44,21 +42,7 @@ namespace CSharpReflection3.Controllers
                 Website = ModelState["Website"].AttemptedValue,
                 Email = ModelState["Email"].AttemptedValue
             };
-            //if (logo != null)
-            //{
-            //    companyToAdd.HasLogo = true;
-            //    CompanyLogo logoToAdd = new CompanyLogo()
-            //    {
-            //        Logo = logo,
-            //        CompanyAssociated = companyToAdd
-            //    };
-                
-            //    DatabaseManagement.AddCompanyToDb(companyToAdd, logoToAdd);
-            //} 
-            //else 
-            //{
-            //    DatabaseManagement.AddCompanyToDb(companyToAdd);
-            //}
+
             DatabaseManagement.AddCompanyToDb(companyToAdd);
             return RedirectToAction("Company");
         }
@@ -66,7 +50,6 @@ namespace CSharpReflection3.Controllers
         public IActionResult CompanySearch()
         {
             ViewBag.Title = "Search for Company";
-            ViewBag.DatabaseType = "Company";
             return View();
         }
 
@@ -78,16 +61,6 @@ namespace CSharpReflection3.Controllers
                 ModelState["Website"].AttemptedValue,
                 ModelState["Email"].AttemptedValue
                 );
-            //using (Context context = new Context())
-            //{
-            //    context.Companies.Add(new Company()
-            //    {
-            //        Name = ModelState["Name"].AttemptedValue,
-            //        Website = ModelState["Website"].AttemptedValue,
-            //        Email = ModelState["Email"].AttemptedValue
-            //    });
-            //    context.SaveChanges();
-            //}
 
             return RedirectToAction("CompanySearchResults");
         }
@@ -95,7 +68,6 @@ namespace CSharpReflection3.Controllers
         public IActionResult CompanySearchResults()
         {
             ViewBag.Title = "Company Search Results";
-            ViewBag.DatabaseType = "Company";
             return View();
         }
 
@@ -109,34 +81,82 @@ namespace CSharpReflection3.Controllers
         public IActionResult CompanyUpdate()
         {
             ViewBag.Title = "Update Company";
-            ViewBag.DatabaseType = "Company";
             return View();
+        }
+
+        public IActionResult CompanyView()
+        {
+            ViewBag.Title = "View Company";
+            return View();
+        }
+
+        public IActionResult CompanyDelete()
+        {
+            ViewBag.Title = "Delete Company";
+            return View();
+        }
+
+        public ActionResult DeleteCompany(string deleteCompany)
+        {
+            using (Context context = new Context())
+            {
+                DatabaseManagement.SelectedCompany = context.Companies.Find(Int32.Parse(deleteCompany));
+            }
+            return RedirectToAction("CompanyDelete");
+
+        }
+
+        public ActionResult ConfirmDeleteCompany()
+        {
+            using (Context context = new Context())
+            {
+                DatabaseManagement.DeleteCompanyFromDb(DatabaseManagement.SelectedCompany);
+            }
+            return RedirectToAction("Company");
+        }
+        public ActionResult SelectCompany(string updateCompany)
+        {
+            using (Context context = new Context())
+            {
+                foreach (Company company in context.Companies)
+                {
+                    if (company.Id == Int32.Parse(updateCompany))
+                    {
+                        DatabaseManagement.SelectedCompany = company;
+                        break;
+                    }
+                }
+            }
+            return RedirectToAction("CompanyView");
         }
 
         [ActionName("CompanyUpdate"), HttpPost]
-        public IActionResult CompanyUpdate(string name, string website, string email, object? logo)
-        {
+        public IActionResult CompanyUpdate(string name, string website, string email)
+        {         
+            string newName = ModelState["Name"].AttemptedValue;
+            string newEmail = ModelState["Email"].AttemptedValue;
+            string newWebsite = ModelState["Website"].AttemptedValue;
+
             DatabaseManagement.UpdateACompany(
-                ModelState["Name"].AttemptedValue,
-                ModelState["Website"].AttemptedValue,
-                ModelState["Email"].AttemptedValue,
+                newName,
+                newWebsite,
+                newEmail,
                 null
                 );
-            return RedirectToAction("Company");
+           
+            return RedirectToAction("CompanyView");
         }
+
         public IActionResult Employee()
         {
             ViewBag.Title = "Employee Management";
-            ViewBag.DatabaseType = "Employee";
 
             return View();
         }
 
-        
         public IActionResult EmployeeAdd()
         {
             ViewBag.Title = "Add Employee";
-            ViewBag.DatabaseType = "Employee";
 
             return View();
         }
@@ -152,20 +172,14 @@ namespace CSharpReflection3.Controllers
                 Email = ModelState["Email"].AttemptedValue
             };
 
-            if (ModelState["PlaceOfWork"].AttemptedValue != "")
+            if (ModelState["PlaceOfWork"].AttemptedValue != "none")
             {
                 using(Context context = new Context())
                 {
-                    if(context.Companies.Find(ModelState["PlaceOfWork"].AttemptedValue) != null)
-                        employeeToAdd.PlaceOfWork = context.Companies.Find(ModelState["PlaceOfWork"].AttemptedValue);
+                    employeeToAdd.PlaceOfWork = context.Companies.Find(int.Parse(ModelState["PlaceOfWork"].AttemptedValue));
                 }
-                
             }
-            else
-            {
-                employeeToAdd.PlaceOfWork = null;
-            }
-
+            
             DatabaseManagement.AddEmployeeToDb(employeeToAdd);
             return RedirectToAction("Employee");
         }
@@ -173,7 +187,6 @@ namespace CSharpReflection3.Controllers
         public IActionResult EmployeeSearch()
         {
             ViewBag.Title = "Search for Employee";
-            ViewBag.DatabaseType = "Employee";
             return View();
         }
 
@@ -195,7 +208,6 @@ namespace CSharpReflection3.Controllers
         public IActionResult EmployeeSearchResults()
         {
             ViewBag.Title = "Employee Search Results";
-            ViewBag.DatabaseType = "Employee";
             return View();
         }
 
@@ -209,21 +221,7 @@ namespace CSharpReflection3.Controllers
         public IActionResult EmployeeUpdate()
         {
             ViewBag.Title = "Update Employee";
-            ViewBag.DatabaseType = "Employee";
             return View();
-        }
-
-        [ActionName("EmployeeUpdate"), HttpPost]
-        public IActionResult EmployeeUpdate(string firstName, string lastName, string placeOfWork, string email, string phoneNumber)
-        {
-            DatabaseManagement.UpdateAnEmployee(
-                ModelState["FirstName"].AttemptedValue,
-                ModelState["LastName"].AttemptedValue,
-                ModelState["PlaceOfWork"].AttemptedValue,
-                ModelState["PhoneNumber"].AttemptedValue,
-                ModelState["Email"].AttemptedValue
-                );
-            return RedirectToAction("Employee");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -231,31 +229,75 @@ namespace CSharpReflection3.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        public IActionResult EmployeeView()
+        {
+            ViewBag.Title = "View Employee";
+            return View();
+        }
+
+        public IActionResult EmployeeDelete()
+        {
+            ViewBag.Title = "Delete Employee";
+            return View();
+        }
 
         public ActionResult DeleteEmployee(string deleteEmployee)
         {
-            DatabaseManagement.DeleteEmployeeFromDb(DatabaseManagement.EmployeeSearchResults[5][Int32.Parse(deleteEmployee)]);
+            using (Context context = new Context())
+            {
+                DatabaseManagement.SelectedEmployee = context.Employees.Find(Int32.Parse(deleteEmployee));
+            }
+            return RedirectToAction("EmployeeDelete");
+        }
+
+        public ActionResult ConfirmDeleteEmployee()
+        {
+            using (Context context = new Context())
+            {
+                DatabaseManagement.DeleteEmployeeFromDb(DatabaseManagement.SelectedEmployee);
+            }
             return RedirectToAction("Employee");
         }
 
-        public ActionResult DeleteCompany(string deleteCompany)
+        public ActionResult SelectEmployee(string updateEmployee)
         {
-            DatabaseManagement.DeleteCompanyFromDb(DatabaseManagement.CompanySearchResults[3][Int32.Parse(deleteCompany)]);
-            return RedirectToAction("Company");
+            using (Context context = new Context())
+            {
+                foreach(Employee employee in context.Employees)
+                {
+                    if(employee.Id == Int32.Parse(updateEmployee))
+                    {
+                        DatabaseManagement.SelectedEmployee = employee;
+                        break;
+                    }
+                }
+                if (DatabaseManagement.SelectedEmployee.PlaceOfWork != null)
+                {
+                    DatabaseManagement.SelectedCompany = DatabaseManagement.SelectedEmployee.PlaceOfWork;
+                }
+            }
+            
+            return RedirectToAction("EmployeeView");
         }
 
-        public ActionResult UpdateCompany(string updateCompany)
+        [ActionName("EmployeeUpdate"), HttpPost]
+        public IActionResult EmployeeUpdate(string firstName, string lastName, string placeOfWork, string email, string phoneNumber)
         {
-            DatabaseManagement.SelectedCompany = DatabaseManagement.CompanySearchResults[3][Int32.Parse(updateCompany)];
-            return RedirectToAction("CompanyUpdate");
-        }
+            string newFname = ModelState["FirstName"].AttemptedValue;
+            string newLname = ModelState["LastName"].AttemptedValue;
+            string newPow = ModelState["PlaceOfWork"].AttemptedValue;
+            string newNum = ModelState["PhoneNumber"].AttemptedValue;
+            string newEmail = ModelState["Email"].AttemptedValue;
 
-        public ActionResult UpdateEmployee(string updateEmployee)
-        {
-            DatabaseManagement.SelectedEmployee = DatabaseManagement.EmployeeSearchResults[5][Int32.Parse(updateEmployee)];
-            if(DatabaseManagement.SelectedEmployee.PlaceOfWork != null)
-                DatabaseManagement.SelectedCompany = DatabaseManagement.EmployeeSearchResults[5][Int32.Parse(updateEmployee)].PlaceOfWork;
-            return RedirectToAction("EmployeeUpdate");
+            DatabaseManagement.UpdateAnEmployee(
+                newFname,
+                newLname,
+                newPow,
+                newEmail,
+                newNum
+                );
+
+            return RedirectToAction("EmployeeView");
         }
     }
 }

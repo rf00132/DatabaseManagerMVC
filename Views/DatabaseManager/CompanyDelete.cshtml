@@ -1,0 +1,33 @@
+﻿
+<div id="company-update" class="container">
+    <h3 class="text-center">Update a @ViewBag.DatabaseType</h3>
+
+    <div class="form update row-flex" method="post">
+        <div class="flex-cntr">
+            <div class="column-flex">
+                <label>Company Name:</label>
+                <p>@DatabaseManagement.SelectedCompany.Name</p>
+
+            </div>
+        </div>
+            
+        <div class="flex-cntr">
+            <div class="column-flex">
+                <label>Company Email Address:</label>
+                <p>@DatabaseManagement.SelectedCompany.Email</p>
+            </div>
+        </div>
+
+        <div class="flex-cntr">
+            <div class="column-flex">
+                <label>Company Website:</label>
+                <p>@DatabaseManagement.SelectedCompany.Website</p>
+            </div>
+        </div>
+
+        @using(Html.BeginForm("ConfirmDeleteCompany", "DatabaseManager"))
+        {
+            <button class="btn" name="deleteCompany" type="submit" value="@DatabaseManagement.SelectedCompany.Id"> Confirm Delete <i class="fas fa-trash"></i></button>
+        }
+    </div>
+</div>

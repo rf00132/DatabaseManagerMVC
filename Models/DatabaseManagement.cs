@@ -9,18 +9,16 @@ namespace DatabaseManager.Models
 {
     public static class DatabaseManagement
     {
+        public static List<Employee> Employees = new List<Employee>();
         public static List<List<Employee>> EmployeeSearchResults { get; set; } = new List<List<Employee>>();
         public static Employee SelectedEmployee = new();
-        static int EmployeeSearchNum = 0;
+
+
+        public static List<Company> Companies = new List<Company>();
         public static List<List<Company>> CompanySearchResults { get; set; } = new List<List<Company>>();
         public static Company SelectedCompany = new();
-        static int CompanySearchNum = 0;
 
-
-
-
-
-
+        
         public static void AddEmployeeToDb(Employee employee)
         {
             using (Context context = new Context())
@@ -88,45 +86,6 @@ namespace DatabaseManager.Models
                 context.SaveChanges();
             }
         }
-        //try changing this to static and just adding the employee to the search results variable
-        public static void SearchForEmployee(string searchTerm)
-        {
-            using (Context context = new Context())
-            {
-                List<Employee> employeesToReturn = new List<Employee>();
-                foreach (Employee employee in context.Employees)
-                {
-                    //workplace searching is broken rn
-                    if (employee.FirstName.ToLower().Contains(searchTerm.ToLower())
-                        || employee.LastName.ToLower().Contains(searchTerm.ToLower())
-                        || (employee.PhoneNumber != null && employee.PhoneNumber.ToLower().Contains(searchTerm.ToLower()))
-                        || (employee.Email != null && employee.Email.ToLower().Contains(searchTerm.ToLower()))
-                        || (employee.PlaceOfWork != null && employee.PlaceOfWork.Name.ToLower().Contains(searchTerm.ToLower())))
-                    {
-                        EmployeeSearchResults[EmployeeSearchNum].Add(employee);
-                    }
-                }
-            }
-        }
-
-        public static void SearchForCompany(string searchTerm)
-        {
-            List<Company> companiesToReturn = new List<Company>();
-            using (Context context = new Context())
-            {
-                foreach (Company company in context.Companies)
-                {
-                    Console.WriteLine(company);
-                    //no logo searching for now.
-                    if (company.Name.ToLower().Contains(searchTerm.ToLower())
-                        || (company.Email != null && company.Email.ToLower().Contains(searchTerm.ToLower()))
-                        || (company.Website != null && company.Website.ToLower().Contains(searchTerm.ToLower())))
-                    {
-                        CompanySearchResults[CompanySearchNum].Add(company);
-                    }
-                }
-            }
-        }
 
         public static void UpdateAnEmployee(string firstName, string lastName, string placeOfWork, string email, string phoneNumber)
         {
@@ -141,9 +100,16 @@ namespace DatabaseManager.Models
                 {
                     employeeToUpdate.LastName = lastName;
                 }
-                if (placeOfWork != "" && context.Companies.First(n => n.Name == placeOfWork) != null)
+                if (placeOfWork != "none")
                 {
-                    employeeToUpdate.PlaceOfWork = context.Companies.First(n => n.Name == placeOfWork);
+                    foreach (Company company in context.Companies)
+                    {
+                        if (company.Id == Int32.Parse(placeOfWork))
+                        {
+                            employeeToUpdate.PlaceOfWork = company;
+                            break;
+                        }
+                    }
                 }
 
                 if (email != "")

@@ -1,4 +1,54 @@
 ﻿<div class="main-nav-btns row-flex flex-center">
-    <a href="/DatabaseManager/EmployeeSearch" class="btn">Search</a>
-    <a href="/DatabaseManager/EmployeeAdd" class="btn">Add Entry</a>
+    <a href="/DatabaseManager/EmployeeSearch" class="btn">Search <i class="fas fa-search"></i></a>
+    <a href="/DatabaseManager/EmployeeAdd" class="btn">Add Entry <i class="fas fa-plus"></i></a>
+</div>
+
+<div class="container">
+    <div class="search-results-cntr column-flex">
+
+    @using(Context context = new Context())
+    {
+        if( context.Employees.Count() == 0) { 
+            <div class="text-center">The employee database is empty.</div>
+        } 
+        else
+        {
+            @foreach (Employee employee in context.Employees)
+            {
+                <div class="search-result row-flex flex-between">
+                    <div class="result-detail">
+                        <p class="detail-element">@employee.DisplayName()</p>
+                       
+                        @if(employee.PlaceOfWork != null)
+                        {
+                            <p class="detail-element">@employee.DisplayCompany()</p>    
+                        }
+
+                        @if(employee.PhoneNumber != null && employee.PhoneNumber != "")
+                        {
+                            <p class="detail-element">@employee.DisplayNumber()</p>
+                        }
+
+                        @if(employee.Email != null && employee.Email != "")
+                        {
+                            <p class="detail-element">@employee.DisplayEmail()</p>
+                        }
+                    </div>
+                    
+                    <div class="search-result-btn-cntr">
+                        @using(Html.BeginForm("SelectEmployee", "DatabaseManager"))
+                        {
+                            <button class="btn" name="updateEmployee" type="submit" value="@employee.Id"><i class="fas fa-folder-open"></i></button>
+                        }
+
+                        @using(Html.BeginForm("DeleteEmployee", "DatabaseManager"))
+                        {
+                            <button class="btn" name="deleteEmployee" type="submit" value="@employee.Id"><i class="fas fa-trash"></i></button>
+                        }
+                    </div>
+                </div>
+            }
+        }
+    }
+    </div>
 </div>

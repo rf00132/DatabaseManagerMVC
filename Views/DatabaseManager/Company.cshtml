@@ -1,4 +1,51 @@
 ﻿<div class="main-nav-btns row-flex flex-center">
-    <a href="/DatabaseManager/CompanySearch" class="btn">Search</a>
-    <a href="/DatabaseManager/CompanyAdd" class="btn">Add Entry</a>
+    <a href="/DatabaseManager/CompanySearch" class="btn">Search <i class="fas fa-search"></i></a>
+    <a href="/DatabaseManager/CompanyAdd" class="btn">Add Entry <i class="fas fa-plus"></i></a>
 </div>
+
+<div class="container">
+    <div class="search-results-cntr column-flex">
+
+    @using(Context context = new Context())
+    {
+        if( context.Companies.Count() == 0) { 
+            <div class="text-center">The company database is empty.</div>
+        } 
+        else
+        {
+            @foreach (Company company in context.Companies)
+            {
+                <div class="search-result row-flex flex-between">
+                    <div class="result-detail">
+                        <p class="detail-element">@company.DisplayName()</p>
+                       
+                        @if(company.Website != null && company.Website != "")
+                        {
+                            <p class="detail-element">@company.DisplayWebsite()</p>    
+                        }
+
+                        @if(company.Email != null && company.Email != "")
+                        {
+                            <p class="detail-element">@company.DisplayEmail()</p>
+                        }
+                    </div>
+                    
+
+                    <div class="search-result-btn-cntr">
+                        @using(Html.BeginForm("SelectCompany", "DatabaseManager"))
+                        {
+                            <button class="btn" name="updateCompany" type="submit" value="@company.Id"><i class="fas fa-folder-open"></i></button>
+                        }
+
+                        @using(Html.BeginForm("DeleteCompany", "DatabaseManager"))
+                        {
+                            <button class="btn" name="deleteCompany" type="submit" value="@company.Id"><i class="fas fa-trash"></i></button>
+                        }
+                    </div>
+                </div>
+            }
+        }
+    }
+    </div>
+</div>
+

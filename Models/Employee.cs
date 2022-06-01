@@ -15,17 +15,24 @@ namespace DatabaseManager.Models
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
 
-        public string DisplayText()
+        public string DisplayName()
         {
-            string retstring = string.Format("Name: {0} {1}", FirstName, LastName);
-  
-            //if (Email != "") retstring += ", Email: " + Email;
-           
-            if (PlaceOfWork != null) retstring += ", Place of Work: " + PlaceOfWork.Name;
-            
-            //if (PhoneNumber != "") retstring += ", Phone Number: " + PhoneNumber;
-            
-            return retstring;
+            return "Name: " + FirstName + " " + LastName;
+        }
+
+        public string DisplayCompany()
+        {
+            return "Company: " + PlaceOfWork.Name;
+        }
+
+        public string DisplayNumber()
+        {
+            return "Number: " + PhoneNumber;
+        }
+
+        public string DisplayEmail()
+        {
+            return "Email: " + Email;
         }
     }
 }
