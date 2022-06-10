@@ -132,8 +132,6 @@ i{
 	padding: 8px 16px;
 }
 
-/* view styles  */
-
 
 /* update & view styles  */
 
@@ -249,32 +247,7 @@ i{
 	margin: 0 auto;
 }
 
-.logo-cntr{
-	margin-bottom: 15px;
-	
-}
-
-.update .logo-cntr .column-flex{
-	width: 200px 
-}
-
-.logo-cntr img{
-	width:100px;
-}
-
-#logoInputAdd,
-#logoInputSearch,
-#logoInputUpdate{
-	font-size: 12px;
-}
-
-
-
 @media screen and (min-width: 470px) {
-	.logo-cntr{
-		display: flex;
-		justify-content: space-between;
-	}
 
 	.container {
 		width: 420px;
@@ -335,10 +308,6 @@ i{
 		margin-top: auto;
 		margin-bottom: 16px;
 		margin-left: 12px;
-	}
-
-	.update .logo-cntr .column-flex{
-		width: calc(768px / 4 - 15px);
 	}
 }
 
